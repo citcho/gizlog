@@ -16,4 +16,9 @@ class DailyReportController extends Controller
     {
         return view('user.daily_report.index');
     }
+
+    public function showCreatePage()
+    {
+        return view('user.daily_report.create');
+    }
 }

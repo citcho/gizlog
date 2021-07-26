@@ -27,6 +27,7 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::name('report.')
         ->group(function () {
             Route::get('report', ['as' => 'index', 'uses' => 'DailyReportController@index']);
+            Route::get('report/create', ['as' => 'show.create', 'uses' => 'DailyReportController@showCreatePage']);
         });
 });
 
