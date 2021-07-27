@@ -16,7 +16,7 @@
           </tr>
           <tr>
             <th class="table-column">Content</th>
-            <td class='td-text'>{{ $dailyReport->content }}</td>
+            <td class='td-text'>{!! nl2br(e($dailyReport->content)) !!}</td>
           </tr>
         </tbody>
       </table>
