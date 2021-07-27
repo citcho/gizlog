@@ -31,6 +31,7 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::post('report', ['as' => 'store', 'uses' => 'DailyReportController@store']);
             Route::get('report/{id}', ['as' => 'show.detail', 'uses' => 'DailyReportController@showDetailPage']);
             Route::get('report/{id}/edit', ['as' => 'show.edit', 'uses' => 'DailyReportController@showEditPage']);
+            Route::put('report/{id}/edit', ['as' => 'edit', 'uses' => 'DailyReportController@edit']);
             Route::delete('report/{id}', ['as' => 'delete', 'uses' => 'DailyReportController@delete']);
         });
 });
