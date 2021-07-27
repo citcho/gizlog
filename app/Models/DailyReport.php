@@ -22,4 +22,11 @@ class DailyReport extends Model
         'content',
         'reporting_time'
     ];
+
+    public function searchByYearMonth($yearMonth)
+    {
+        return $this->where('reporting_time', 'LIKE', $yearMonth . '%')
+            ->orderByDesc('reporting_time')
+            ->paginate(config('const.paginate'));
+    }
 }

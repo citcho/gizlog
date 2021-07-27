@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\DailyReportRequest;
 use App\Models\DailyReport;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DailyReportController extends Controller
@@ -17,9 +18,14 @@ class DailyReportController extends Controller
         $this->dailyReport = $dailyReport;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $dailyReports = $this->dailyReport->orderByDesc('reporting_time')->paginate(config('const.paginate'));
+        $searchedYearMonth = $request->input('searched_year_month');
+        if (isset($searchedYearMonth)) {
+            $dailyReports = $this->dailyReport->searchByYearMonth($searchedYearMonth);
+        } else {
+            $dailyReports = $this->dailyReport->orderByDesc('reporting_time')->paginate(config('const.paginate'));
+        }
         return view('user.daily_report.index', compact('dailyReports'));
     }
 

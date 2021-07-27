@@ -5,10 +5,10 @@
 <div class="main-wrap">
   <div class="btn-wrapper daily-report">
     {{--  TODO 日報検索機能  --}}
-    <form>
-      <input type="text" class="form-control">
-      <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
-    </form>
+    {!! Form::open(['route' => 'report.index', 'method' => 'GET', 'class'=> 'form-inline']) !!}
+      <input type="month" name="searched_year_month" class="form-control" value="{{ old('searched_year_month', null) }}">
+      {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-icon']) !!}
+    {!! Form::close() !!}
     <a class="btn btn-icon" href="{{ route('report.show.create') }}"><i class="fa fa-plus"></i></a>
   </div>
   <div class="content-wrapper table-responsive">
@@ -32,7 +32,7 @@
         @endforeach
       </tbody>
     </table>
-    <div class="text-center">{{ $dailyReports->appends(Request::input('page'))->links() }}</div>
+    <div class="text-center">{{ $dailyReports->appends(request()->query())->links() }}</div>
   </div>
 </div>
 

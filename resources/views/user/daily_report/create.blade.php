@@ -6,7 +6,7 @@
   <div class="container">
     {!! Form::open(['route' => 'report.store']) !!}
       <div class="form-group form-size-small @if ($errors->has('reporting_time')) has-error @endif">
-        {!! Form::date('reporting_time', now(), ['class' => 'form-control']) !!}
+        {!! Form::date('reporting_time', date('Y-m-d'), ['class' => 'form-control']) !!}
         <span class="help-block">{{ $errors->first('reporting_time') }}</span>
       </div>
       <div class="form-group @if ($errors->has('title')) has-error @endif">
