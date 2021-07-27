@@ -29,6 +29,7 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::get('report', ['as' => 'index', 'uses' => 'DailyReportController@index']);
             Route::get('report/create', ['as' => 'show.create', 'uses' => 'DailyReportController@showCreatePage']);
             Route::post('report', ['as' => 'store', 'uses' => 'DailyReportController@store']);
+            Route::get('report/{id}', ['as' => 'show.detail', 'uses' => 'DailyReportController@showDetailPage']);
         });
 });
 

@@ -8,6 +8,8 @@ class DailyReport extends Model
 {
     protected $table = 'daily_reports';
 
+    protected $dates = ['reporting_time'];
+
     protected $fillable = [
         'user_id',
         'title',

@@ -34,4 +34,10 @@ class DailyReportController extends Controller
         $dailyReport->save();
         return redirect()->route('report.index');
     }
+
+    public function showDetailPage($reportId)
+    {
+        $dailyReport = $this->dailyReport->find($reportId);
+        return view('user.daily_report.show', compact('dailyReport'));
+    }
 }
