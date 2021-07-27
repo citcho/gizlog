@@ -19,7 +19,8 @@ class DailyReportController extends Controller
 
     public function index()
     {
-        return view('user.daily_report.index');
+        $dailyReports = $this->dailyReport->orderByDesc('reporting_time')->paginate(config('const.paginate'));
+        return view('user.daily_report.index', compact('dailyReports'));
     }
 
     public function showCreatePage()
