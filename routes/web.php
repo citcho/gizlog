@@ -34,6 +34,11 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::put('report/{id}/edit', ['as' => 'edit', 'uses' => 'DailyReportController@edit']);
             Route::delete('report/{id}', ['as' => 'delete', 'uses' => 'DailyReportController@delete']);
         });
+
+    Route::name('question.')
+        ->group(function () {
+            Route::get('question', ['as' => 'index', 'uses' => 'QuestionController@index']);
+        });
 });
 
 // 管理者側画面
