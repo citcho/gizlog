@@ -6,7 +6,7 @@
   <div class="btn-wrapper daily-report">
     {{--  TODO 日報検索機能  --}}
     {!! Form::open(['route' => 'report.index', 'method' => 'GET', 'class'=> 'form-inline']) !!}
-      <input type="month" name="searched_year_month" class="form-control" value="{{ old('searched_year_month', null) }}">
+      {!! Form::input('month', 'searched_year_month', null, ['class' => 'form-control']) !!}
       {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-icon']) !!}
     {!! Form::close() !!}
     <a class="btn btn-icon" href="{{ route('report.show.create') }}"><i class="fa fa-plus"></i></a>
