@@ -23,6 +23,17 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::get('slack/login', 'Auth\AuthenticateController@callSlackApi');
     Route::get('callback', 'Auth\AuthenticateController@loginBySlackUserInfo');
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+    Route::name('report.')
+        ->group(function () {
+            Route::get('report', ['as' => 'index', 'uses' => 'DailyReportController@index']);
+            Route::get('report/create', ['as' => 'show.create', 'uses' => 'DailyReportController@showCreatePage']);
+            Route::post('report', ['as' => 'store', 'uses' => 'DailyReportController@store']);
+            Route::get('report/{id}', ['as' => 'show.detail', 'uses' => 'DailyReportController@showDetailPage']);
+            Route::get('report/{id}/edit', ['as' => 'show.edit', 'uses' => 'DailyReportController@showEditPage']);
+            Route::put('report/{id}/edit', ['as' => 'edit', 'uses' => 'DailyReportController@edit']);
+            Route::delete('report/{id}', ['as' => 'delete', 'uses' => 'DailyReportController@delete']);
+        });
 });
 
 // 管理者側画面
@@ -33,11 +44,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.' ,'namespace' => 'Admin'], fu
 
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
-    /*
-     * ----------------------------------------------------------
-     * 静的なページが簡単に確認できるように ClosureでViewを返しています。処理に応じて編集してください。
-     * 尚、このコメントアウトはコード提出の際は削除してください。
-     */
     Route::get('attendance', function () {
         return view('admin.attendance.index');
     });
@@ -50,9 +56,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.' ,'namespace' => 'Admin'], fu
     Route::get('attendance/user', function () {
         return view('admin.attendance.user');
     });
-    /*
-     * ---------------------------------------------------------
-     */
 
     Route::get('report', function () {
         abort(404);

@@ -4,21 +4,22 @@
 <h1 class="brand-header">日報編集</h1>
 <div class="main-wrap">
   <div class="container">
-    <form>
-      <div class="form-group form-size-small has-error">
-        <input type="date" class="form-control">
-        <span class="help-block"></span>
+    {!! Form::open(['route' => ['report.edit', $dailyReport->id]]) !!}
+    @method('PUT')
+      <div class="form-group form-size-small @if ($errors->has('reporting_time')) has-error @endif">
+        {!! Form::date('reporting_time', $dailyReport->reporting_time->format('Y-m-d'), ['class' => 'form-control']) !!}
+        <span class="help-block">{{ $errors->first('reporting_time') }}</span>
       </div>
-      <div class="form-group has-error">
-        <input type="text" class="form-control" placeholder="Title">
-        <span class="help-block"></span>
+      <div class="form-group @if ($errors->has('title')) has-error @endif">
+        {!! Form::text('title', $dailyReport->title, ['class' => 'form-control']) !!}
+        <span class="help-block">{{ $errors->first('title') }}</span>
       </div>
-      <div class="form-group has-error">
-        <textarea class="form-control" placeholder="Content"></textarea>
-        <span class="help-block"></span>
+      <div class="form-group @if ($errors->has('content')) has-error @endif">
+        {!! Form::textarea('content', $dailyReport->content, ['class' => 'form-control']) !!}
+        <span class="help-block">{{ $errors->first('content') }}</span>
       </div>
-      <button type="submit" class="btn btn-success pull-right">Update</button>
-    </form>
+      {!! Form::submit('Update', ['class' => 'btn btn-success pull-right']) !!}
+    {!! Form::close() !!}
   </div>
 </div>
 
