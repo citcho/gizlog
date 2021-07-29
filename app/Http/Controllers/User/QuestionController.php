@@ -32,6 +32,7 @@ class QuestionController extends Controller
             ->when(isset($inputs['search_word']), function ($query) use ($inputs) {
                 $query->where('title', 'LIKE', '%' . $inputs['search_word'] . '%');
             })
+            ->orderByDesc('created_at')
             ->paginate(10);
         $tagCategories = $this->tagCategory->all();
         return view('user.question.index', compact('questions', 'tagCategories'));
@@ -43,6 +44,7 @@ class QuestionController extends Controller
         ->with(['tagCategory'])
         ->withCount('comments')
         ->where('user_id', \Auth::id())
+        ->orderByDesc('created_at')
         ->paginate(10);
         return view('user.question.mypage', compact('myQuestions'));
     }

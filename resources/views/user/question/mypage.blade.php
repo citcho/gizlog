@@ -20,7 +20,7 @@
       <tbody>
         @foreach ($myQuestions as $question)
         <tr class="row">
-          <td class="col-xs-2">{{ $question->created_at->format('Y/m/d (D)') }}</td>
+          <td class="col-xs-2">{{ $question->created_at->format('Y-m-d') }}</td>
           <td class="col-xs-1">{{ $question->tagCategory->name }}</td>
           <td class="col-xs-5">{{ $question->title }}</td>
           <td class="col-xs-2"><span class="point-color">{{ $question->comments_count }}</span></td>
@@ -40,6 +40,7 @@
         @endforeach
       </tbody>
     </table>
+    <div aria-label="Page navigation example" class="text-center">{{ $myQuestions->appends(request()->query())->links() }}</div>
   </div>
 </div>
 

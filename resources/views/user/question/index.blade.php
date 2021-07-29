@@ -38,7 +38,7 @@
         <tr class="row">
           <td class="col-xs-1">{{ $question->user->name }}<img src="{{ $question->user->avatar }}" class="avatar-img"></td>
           <td class="col-xs-2">{{ $question->tagCategory->name }}</td>
-          <td class="col-xs-6">{{ $question->title }}</td>
+          <td class="col-xs-6">{{ str_limit($question->title, 30, '...') }}</td>
           <td class="col-xs-1"><span class="point-color">{{ $question->comments_count }}</span></td>
           <td class="col-xs-2">
             <a class="btn btn-success" href="">
