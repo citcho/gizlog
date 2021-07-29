@@ -62,4 +62,13 @@ class QuestionController extends Controller
         $question->save();
         return redirect()->route('question.index');
     }
+
+    public function deleteMyQuestion($questionId)
+    {
+        $question = $this->question->find($questionId);
+        if ($question->user_id === \Auth::id()) {
+            $question->delete();
+        }
+        return redirect()->route('question.show.mypage');
+    }
 }
