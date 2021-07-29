@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CommentRequest;
 use App\Http\Requests\User\QuestionsRequest;
 use App\Models\Comment;
 use App\Models\Question;
@@ -78,7 +79,17 @@ class QuestionController extends Controller
     public function showDetailPage($questionId)
     {
         $question = $this->question->find($questionId);
-        $comments = $this->comment->with('user')->where('question_id', $questionId)->orderByDesc('created_at')->get();
+        $comments = $this->comment->with('user')->where('question_id', $questionId)->orderBy('created_at')->get();
         return view('user.question.show', compact('question', 'comments'));
+    }
+
+    public function comment(CommentRequest $request)
+    {
+        $inputs = $request->all();
+        $comment = $this->comment->fill($inputs);
+        $comment->content = $inputs['comment'];
+        $comment->user_id = \Auth::id();
+        $comment->save();
+        return redirect()->route('question.show.detail', $inputs['question_id']);
     }
 }

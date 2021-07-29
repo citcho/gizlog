@@ -24,7 +24,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'question_id' => 'required|exists:questions,id',
+            'comment' => 'required|string|max:100',
         ];
     }
 
@@ -36,7 +37,10 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'required' => '入力必須の項目です。',
+            'exists' => '正しい質問内容を選択してください。',
+            'max' => ':max文字以内で入力してください。',
+            'string' => '文字列型で入力してください。',
         ];
     }
 }

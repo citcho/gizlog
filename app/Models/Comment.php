@@ -8,6 +8,10 @@ class Comment extends Model
 {
     protected $table = 'comments';
 
+    protected $fillable = [
+        'question_id',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
