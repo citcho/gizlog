@@ -28,6 +28,9 @@ class QuestionController extends Controller
             ->when(isset($inputs['tag_category_id']), function ($query) use ($inputs) {
                     $query->where('tag_category_id', $inputs['tag_category_id']);
             })
+            ->when(isset($inputs['search_word']), function ($query) use ($inputs) {
+                $query->where('title', 'LIKE', '%' . $inputs['search_word'] . '%');
+            })
             ->paginate(10);
         $tagCategories = $this->tagCategory->all();
         return view('user.question.index', compact('questions', 'tagCategories'));

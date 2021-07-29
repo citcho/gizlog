@@ -6,8 +6,8 @@
   {!! Form::open(['route' => 'question.index', 'method' => 'GET', 'id' => 'question-search-form']) !!}
     <div class="btn-wrapper">
       <div class="search-box">
-        <input class="form-control search-form" placeholder="Search words..." name="search_word" type="text">
-        <button type="submit" class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></button>
+        {!! Form::text('search_word', null, ['placeholder' => 'Search words...', 'class' => 'form-control search-form']) !!}
+        {!! Form::button('<i class="fa fa-search" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'search-icon']) !!}
       </div>
       <a class="btn" href=""><i class="fa fa-plus" aria-hidden="true"></i></a>
       <a class="btn" href="">
