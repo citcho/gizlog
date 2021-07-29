@@ -4,18 +4,21 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\QuestionsRequest;
+use App\Models\Comment;
 use App\Models\Question;
 use App\Models\TagCategory;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+    private $comment;
     private $question;
     private $tagCategory;
 
-    public function __construct(Question $question, TagCategory $tagCategory)
+    public function __construct(Comment $comment, Question $question, TagCategory $tagCategory)
     {
         $this->middleware('auth');
+        $this->comment = $comment;
         $this->question = $question;
         $this->tagCategory = $tagCategory;
     }
@@ -70,5 +73,12 @@ class QuestionController extends Controller
             $question->delete();
         }
         return redirect()->route('question.show.mypage');
+    }
+
+    public function showDetailPage($questionId)
+    {
+        $question = $this->question->find($questionId);
+        $comments = $this->comment->with('user')->where('question_id', $questionId)->orderByDesc('created_at')->get();
+        return view('user.question.show', compact('question', 'comments'));
     }
 }

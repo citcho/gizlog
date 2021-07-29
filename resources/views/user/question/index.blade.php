@@ -41,7 +41,7 @@
           <td class="col-xs-6">{{ str_limit($question->title, 30, '...') }}</td>
           <td class="col-xs-1"><span class="point-color">{{ $question->comments_count }}</span></td>
           <td class="col-xs-2">
-            <a class="btn btn-success" href="">
+            <a class="btn btn-success" href="{{ route('question.show.detail', $question->id) }}">
               <i class="fa fa-comments-o" aria-hidden="true"></i>
             </a>
           </td>
