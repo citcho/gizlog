@@ -8,6 +8,10 @@ class Question extends Model
 {
     protected $table = 'questions';
 
+    protected $dates = [
+        'created_at',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

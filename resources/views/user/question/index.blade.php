@@ -10,7 +10,7 @@
         {!! Form::button('<i class="fa fa-search" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'search-icon']) !!}
       </div>
       <a class="btn" href=""><i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn" href="">
+      <a class="btn" href="{{ route('question.show.mypage') }}">
         <i class="fa fa-user" aria-hidden="true"></i>
       </a>
     </div>
