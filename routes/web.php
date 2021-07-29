@@ -39,6 +39,8 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
         ->group(function () {
             Route::get('question', ['as' => 'index', 'uses' => 'QuestionController@index']);
             Route::get('question/mypage', ['as' => 'show.mypage', 'uses' => 'QuestionController@showMyPage']);
+            Route::get('question/create', ['as' => 'show.create', 'uses' => 'QuestionController@showCreatePage']);
+            Route::post('question', ['as' => 'create', 'uses' => 'QuestionController@store']);
         });
 });
 

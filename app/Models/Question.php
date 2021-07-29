@@ -8,6 +8,12 @@ class Question extends Model
 {
     protected $table = 'questions';
 
+    protected $fillable = [
+        'tag_category_id',
+        'title',
+        'content',
+    ];
+
     protected $dates = [
         'created_at',
     ];

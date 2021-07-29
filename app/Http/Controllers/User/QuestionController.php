@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\QuestionsRequest;
 use App\Models\Question;
 use App\Models\TagCategory;
 use Illuminate\Http\Request;
@@ -44,5 +45,19 @@ class QuestionController extends Controller
         ->where('user_id', \Auth::id())
         ->paginate(10);
         return view('user.question.mypage', compact('myQuestions'));
+    }
+
+    public function showCreatePage()
+    {
+        $tagCategories = $this->tagCategory->pluck('name', 'id');
+        return view('user.question.create', compact('tagCategories'));
+    }
+
+    public function store(QuestionsRequest $request)
+    {
+        $question = $this->question->fill($request->all());
+        $question->user_id = \Auth::id();
+        $question->save();
+        return redirect()->route('question.index');
     }
 }

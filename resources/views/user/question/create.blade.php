@@ -4,24 +4,21 @@
 <h2 class="brand-header">質問投稿</h2>
 <div class="main-wrap">
   <div class="container">
-    <form>
+    {!! Form::open(['route' => 'question.create']) !!}
       <div class="form-group">
-        <select name='tag_category_id' class="form-control selectpicker form-size-small">
-          <option value="">Select category</option>
-            <option value= ""></option>
-        </select>
+        {!! Form::select('tag_category_id', $tagCategories, null, ['class' => 'form-control selectpicker form-size-small', 'placeholder' => 'Select category']) !!}
         <span class="help-block"></span>
       </div>
       <div class="form-group">
-        <input class="form-control" placeholder="title" name="title" type="text">
+        {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}
         <span class="help-block"></span>
       </div>
       <div class="form-group">
-        <textarea class="form-control" placeholder="Please write down your question here..." name="content" cols="50" rows="10"></textarea>
+        {!! Form::textarea('content', null, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => 50, 'rows' => 10]) !!}
         <span class="help-block"></span>
       </div>
-      <input name="confirm" class="btn btn-success pull-right" type="submit" value="create">
-    </form>
+      {!! Form::button('create', ['class' => 'btn btn-success pull-right', 'type' => 'submit']) !!}
+    {!! Form::close() !!}
   </div>
 </div>
 
