@@ -5,24 +5,21 @@
 
 <div class="main-wrap">
   <div class="container">
-    <form>
+    {!! Form::open() !!}
       <div class="form-group">
-        <select name='tag_category_id' class="form-control selectpicker form-size-small">
-          <option value=""></option>
-            <option value=""></option>
-        </select>
+        {!! Form::select('tag_category_id', $tagCategories , $myQuestion->tag_category_id, ['class' => 'form-control selectpicker form-size-small']) !!}
         <span class="help-block"></span>
       </div>
       <div class="form-group">
-        <input class="form-control" placeholder="title" name="title" type="text" value="">
+        {!! Form::text('title', $myQuestion->title, ['class' => 'form-control', 'placeholder' => 'title']) !!}
         <span class="help-block"></span>
       </div>
       <div class="form-group">
-        <textarea class="form-control" placeholder="Please write down your question here..." name="content" cols="50" rows="10"></textarea>
+        {!! Form::textarea('content', $myQuestion->content, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => 50, 'rows' => 10]) !!}
         <span class="help-block"></span>
       </div>
-      <input name="confirm" class="btn btn-success pull-right" type="submit" value="update">
-    </form>
+      {!! Form::button('UPDATE', ['name' => 'confirm', 'type' => 'submit', 'class' => 'btn btn-success pull-right']) !!}
+    {!! Form::close() !!}
   </div>
 </div>
 

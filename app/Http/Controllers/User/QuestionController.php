@@ -92,4 +92,11 @@ class QuestionController extends Controller
         $comment->save();
         return redirect()->route('question.show.detail', $inputs['question_id']);
     }
+
+    public function showEditPage($questionId)
+    {
+        $tagCategories = $this->tagCategory->pluck('name', 'id');
+        $myQuestion = $this->question->find($questionId);
+        return view('user.question.edit', compact('tagCategories', 'myQuestion'));
+    }
 }
