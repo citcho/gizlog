@@ -114,4 +114,11 @@ class QuestionController extends Controller
         $question->save();
         return redirect()->route('question.show.mypage');
     }
+
+    public function confirmCreate(QuestionsRequest $request)
+    {
+        $inputs = $request->all();
+        $inputs['tag_name'] = $this->tagCategory->find($inputs['tag_category_id'])->name;
+        return view('user.question.create_confirm', compact('inputs'));
+    }
 }

@@ -40,7 +40,8 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::get('question', ['as' => 'index', 'uses' => 'QuestionController@index']);
             Route::get('question/mypage', ['as' => 'show.mypage', 'uses' => 'QuestionController@showMyPage']);
             Route::get('question/create', ['as' => 'show.create', 'uses' => 'QuestionController@showCreatePage']);
-            Route::post('question', ['as' => 'create', 'uses' => 'QuestionController@store']);
+            Route::get('question/create/confirm', ['as' => 'create.confirm', 'uses' => 'QuestionController@confirmCreate']);
+            Route::post('question/create/confirm', ['as' => 'create.confirm', 'uses' => 'QuestionController@store']);
             Route::get('question/{id}', ['as' => 'show.detail', 'uses' => 'QuestionController@showDetailPage']);
             Route::post('question/comment', ['as' => 'create.comment', 'uses' => 'QuestionController@comment']);
             Route::get('question/{id}/edit', ['as' => 'show.edit', 'uses' => 'QuestionController@showEditPage']);
