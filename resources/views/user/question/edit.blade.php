@@ -5,7 +5,7 @@
 
 <div class="main-wrap">
   <div class="container">
-    {!! Form::open() !!}
+    {!! Form::open(['route' => ['question.edit.confirm', $myQuestion->id]]) !!}
       <div class="form-group">
         {!! Form::select('tag_category_id', $tagCategories , $myQuestion->tag_category_id, ['class' => 'form-control selectpicker form-size-small']) !!}
         <span class="help-block"></span>
@@ -18,7 +18,7 @@
         {!! Form::textarea('content', $myQuestion->content, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => 50, 'rows' => 10]) !!}
         <span class="help-block"></span>
       </div>
-      {!! Form::button('UPDATE', ['name' => 'confirm', 'type' => 'submit', 'class' => 'btn btn-success pull-right']) !!}
+      {!! Form::button('UPDATE', ['type' => 'submit', 'class' => 'btn btn-success pull-right']) !!}
     {!! Form::close() !!}
   </div>
 </div>

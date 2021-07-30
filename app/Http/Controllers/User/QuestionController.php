@@ -99,4 +99,19 @@ class QuestionController extends Controller
         $myQuestion = $this->question->find($questionId);
         return view('user.question.edit', compact('tagCategories', 'myQuestion'));
     }
+
+    public function confirmEdit(QuestionsRequest $request, $questionId)
+    {
+        $inputs = $request->all();
+        $inputs['question_id'] = $questionId;
+        $inputs['tag_name'] = $this->tagCategory->find($inputs['tag_category_id'])->name;
+        return view('user.question.edit_confirm', compact('inputs'));
+    }
+
+    public function edit(QuestionsRequest $request, $questionId)
+    {
+        $question = $this->question->find($questionId)->fill($request->all());
+        $question->save();
+        return redirect()->route('question.show.mypage');
+    }
 }

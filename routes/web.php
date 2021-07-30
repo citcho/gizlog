@@ -44,7 +44,9 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::get('question/{id}', ['as' => 'show.detail', 'uses' => 'QuestionController@showDetailPage']);
             Route::post('question/comment', ['as' => 'create.comment', 'uses' => 'QuestionController@comment']);
             Route::get('question/{id}/edit', ['as' => 'show.edit', 'uses' => 'QuestionController@showEditPage']);
-            Route::delete('question/mypage/{id}', ['as' => 'mypage.delete', 'uses' => 'QuestionController@deleteMyQuestion']);
+            Route::post('question/{id}/edit/confirm', ['as' => 'edit.confirm', 'uses' => 'QuestionController@confirmEdit']);
+            Route::put('question/{id}/edit/confirm', ['as' => 'edit.confirm', 'uses' => 'QuestionController@edit']);
+            Route::delete('question/{id}/mypage', ['as' => 'mypage.delete', 'uses' => 'QuestionController@deleteMyQuestion']);
         });
 });
 
