@@ -30,7 +30,7 @@
             </a>
           </td>
           <td class="col-xs-1">
-            {!! Form::open(['route' => ['question.mypage.delete', $question->id]]) !!}
+            {!! Form::open(['route' => ['question.delete', $question->id]]) !!}
               @method('DELETE')
               {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
             {!! Form::close() !!}

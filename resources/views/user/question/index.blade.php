@@ -16,8 +16,8 @@
     </div>
     <div class="category-wrap">
       <div class="btn all">all</div>
-      @foreach ($tagCategories as $tagCategory)
-      <div class="btn {{ $tagCategory->name }}" id="{{ $tagCategory->id }}">{{ $tagCategory->name }}</div>
+      @foreach ($tagCategories as $categoryId => $categoryName)
+      <div class="btn {{ $categoryName }}" id="{{ $categoryId }}">{{ $categoryName }}</div>
       @endforeach
       {!! Form::hidden('tag_category_id', null, ['id' => 'category-val']) !!}
     </div>

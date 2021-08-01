@@ -4,7 +4,7 @@
 <h2 class="brand-header">質問投稿</h2>
 <div class="main-wrap">
   <div class="container">
-    {!! Form::open(['route' => 'question.create.confirm', 'method' => 'GET']) !!}
+    {!! Form::open(['route' => 'question.create.confirm']) !!}
       <div class="form-group">
         {!! Form::select('tag_category_id', $tagCategories, null, ['class' => 'form-control selectpicker form-size-small', 'placeholder' => 'Select category']) !!}
         <span class="help-block"></span>

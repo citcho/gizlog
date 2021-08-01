@@ -24,7 +24,7 @@
       </table>
     </div>
   </div>
-    @foreach ($comments as $comment)
+    @foreach ($question->comments as $comment)
     <div class="comment-list">
         <div class="comment-wrap">
           <div class="comment-title">

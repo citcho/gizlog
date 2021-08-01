@@ -26,99 +26,102 @@ class QuestionController extends Controller
 
     public function index(Request $request)
     {
-        $inputs = $request->all();
         $questions = $this->question
-            ->with(['user', 'tagCategory'])
-            ->withCount('comments')
-            ->when(isset($inputs['tag_category_id']), function ($query) use ($inputs) {
-                $query->where('tag_category_id', $inputs['tag_category_id']);
-            })
-            ->when(isset($inputs['search_word']), function ($query) use ($inputs) {
-                $query->where('title', 'LIKE', '%' . $inputs['search_word'] . '%');
-            })
-            ->orderByDesc('created_at')
-            ->paginate(10);
-        $tagCategories = $this->tagCategory->all();
+            ->searchByRequests($request->all());
+
+        $tagCategories = $this->tagCategory
+            ->pluck('name', 'id');
+
         return view('user.question.index', compact('questions', 'tagCategories'));
     }
 
     public function showMyPage()
     {
         $myQuestions = $this->question
-        ->with(['tagCategory'])
-        ->withCount('comments')
-        ->where('user_id', \Auth::id())
-        ->orderByDesc('created_at')
-        ->paginate(10);
+            ->fetchMyQuestions();
+
         return view('user.question.mypage', compact('myQuestions'));
     }
 
     public function showCreatePage()
     {
         $tagCategories = $this->tagCategory->pluck('name', 'id');
+
         return view('user.question.create', compact('tagCategories'));
     }
 
     public function store(QuestionsRequest $request)
     {
-        $question = $this->question->fill($request->all());
-        $question->user_id = \Auth::id();
-        $question->save();
+        $this->question
+            ->storeMyQuestion($request->all());
+
         return redirect()->route('question.index');
     }
 
-    public function deleteMyQuestion($questionId)
+    public function delete($questionId)
     {
-        $question = $this->question->find($questionId);
-        if ($question->user_id === \Auth::id()) {
-            $question->delete();
-        }
+        $this->question
+            ->deleteMyQuestion($questionId);
+
         return redirect()->route('question.show.mypage');
     }
 
     public function showDetailPage($questionId)
     {
-        $question = $this->question->find($questionId);
-        $comments = $this->comment->with('user')->where('question_id', $questionId)->orderBy('created_at')->get();
-        return view('user.question.show', compact('question', 'comments'));
+        $question = $this->question
+            ->find($questionId);
+
+        return view('user.question.show', compact('question'));
     }
 
     public function comment(CommentRequest $request)
     {
-        $inputs = $request->all();
-        $comment = $this->comment->fill($inputs);
-        $comment->content = $inputs['comment'];
-        $comment->user_id = \Auth::id();
-        $comment->save();
-        return redirect()->route('question.show.detail', $inputs['question_id']);
+        $this->comment
+            ->postComment($request->all());
+
+        return redirect()->route('question.show.detail', $request->input('question_id'));
     }
 
     public function showEditPage($questionId)
     {
-        $tagCategories = $this->tagCategory->pluck('name', 'id');
-        $myQuestion = $this->question->find($questionId);
+        $tagCategories = $this->tagCategory
+            ->pluck('name', 'id');
+
+        $myQuestion = $this->question
+            ->find($questionId);
+
         return view('user.question.edit', compact('tagCategories', 'myQuestion'));
     }
 
-    public function confirmEdit(QuestionsRequest $request, $questionId)
+    public function showEditConfirmPage(QuestionsRequest $request, $questionId)
     {
-        $inputs = $request->all();
-        $inputs['question_id'] = $questionId;
-        $inputs['tag_name'] = $this->tagCategory->find($inputs['tag_category_id'])->name;
-        return view('user.question.edit_confirm', compact('inputs'));
+        $question = $this->question
+            ->fill($request->all());
+
+        $question->tag_category_name = $this->tagCategory
+            ->getTagCategoryName($request->input('tag_category_id'));
+
+        $question->question_id = $questionId;
+
+        return view('user.question.edit_confirm', compact('question'));
     }
 
     public function edit(QuestionsRequest $request, $questionId)
     {
-        $question = $this->question->find($questionId)->fill($request->all());
-        $question->save();
+        $this->question
+            ->editMyQuestion($request->all(), $questionId);
+
         return redirect()->route('question.show.mypage');
     }
 
-    public function confirmCreate(QuestionsRequest $request)
+    public function showCreateConfirmPage(QuestionsRequest $request)
     {
-        $inputs = $request->all();
-        $inputs['tag_name'] = $this->tagCategory->find($inputs['tag_category_id'])->name;
-        return view('user.question.create_confirm', compact('inputs'));
+        $question = $this->question
+            ->fill($request->all());
+
+        $question->tag_category_name = $this->tagCategory
+            ->getTagCategoryName($request->input('tag_category_id'));
+
+        return view('user.question.create_confirm', compact('question'));
     }
 }
