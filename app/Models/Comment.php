@@ -13,7 +13,13 @@ class Comment extends Model
         'question_id',
     ];
 
-    public function postComment($attributes)
+    /**
+     * コメント投稿
+     *
+     * @param array $attributes
+     * @return void
+     */
+    public function postComment(array $attributes): void
     {
         $comment = $this->fill($attributes);
         $comment->content = $attributes['comment'];

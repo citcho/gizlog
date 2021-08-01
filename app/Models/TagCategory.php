@@ -8,7 +8,13 @@ class TagCategory extends Model
 {
     protected $table = 'tag_categories';
 
-    public function getTagCategoryName($tagCategoryId)
+    /**
+     * カテゴリIDからカテゴリ名取得
+     *
+     * @param integer $tagCategoryId
+     * @return string
+     */
+    public function getTagCategoryName(int $tagCategoryId): string
     {
         return $this->find($tagCategoryId)->name;
     }
