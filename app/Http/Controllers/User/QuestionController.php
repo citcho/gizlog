@@ -105,6 +105,7 @@ class QuestionController extends Controller
     public function showDetailPage(int $questionId): View
     {
         $question = $this->question
+            ->with('comments.user')
             ->find($questionId);
 
         return view('user.question.show', compact('question'));
