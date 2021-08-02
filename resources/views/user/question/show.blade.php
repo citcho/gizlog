@@ -45,7 +45,9 @@
       <div class="comment-body">
         {!! Form::textarea('comment', null, ['class' => 'form-control', 'placeholder' => 'Add your comment...', 'cols' => 50, 'rows' => 10]) !!}
         @if ($errors->has('comment'))
-        <span class="help-block">{{ $errors->first('comment') }}</span>
+        @foreach ($errors->get('comment') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
         @endif
       </div>
       <div class="comment-bottom">

@@ -8,15 +8,27 @@
     {!! Form::open(['route' => ['question.edit.confirm', $myQuestion->id]]) !!}
       <div class="form-group">
         {!! Form::select('tag_category_id', $tagCategories , $myQuestion->tag_category_id, ['class' => 'form-control selectpicker form-size-small']) !!}
-        <span class="help-block"></span>
+        @if ($errors->has('tag_category_id'))
+        @foreach ($errors->get('tag_category_id') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
       </div>
       <div class="form-group">
         {!! Form::text('title', $myQuestion->title, ['class' => 'form-control', 'placeholder' => 'title']) !!}
-        <span class="help-block"></span>
+        @if ($errors->has('title'))
+        @foreach ($errors->get('title') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
       </div>
       <div class="form-group">
         {!! Form::textarea('content', $myQuestion->content, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => 50, 'rows' => 10]) !!}
-        <span class="help-block"></span>
+        @if ($errors->has('content'))
+        @foreach ($errors->get('content') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
       </div>
       {!! Form::button('UPDATE', ['type' => 'submit', 'class' => 'btn btn-success pull-right']) !!}
     {!! Form::close() !!}

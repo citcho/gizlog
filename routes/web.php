@@ -45,9 +45,9 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::post('question/create/confirm', ['as' => 'create.confirm', 'uses' => 'QuestionController@showCreateConfirmPage']);
             Route::post('question', ['as' => 'create', 'uses' => 'QuestionController@store']);
 
-            Route::get('question/{id}', ['as' => 'show.detail', 'uses' => 'QuestionController@showDetailPage']);
-
             Route::post('question/comment', ['as' => 'create.comment', 'uses' => 'QuestionController@comment']);
+
+            Route::get('question/{id}', ['as' => 'show.detail', 'uses' => 'QuestionController@showDetailPage']);
 
             Route::get('question/{id}/edit', ['as' => 'show.edit', 'uses' => 'QuestionController@showEditPage']);
             Route::post('question/{id}/edit/confirm', ['as' => 'edit.confirm', 'uses' => 'QuestionController@showEditConfirmPage']);

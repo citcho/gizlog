@@ -89,9 +89,11 @@ class Question extends Model
      */
     public function deleteMyQuestion(int $questionId)
     {
+        $user = Auth::user();
+
         $question = $this->find($questionId);
 
-        if ($question->user_id === Auth::id()) {
+        if ($user->can('delete', $question)) {
             $question->delete();
         }
     }
