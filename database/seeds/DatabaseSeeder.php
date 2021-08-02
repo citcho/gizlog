@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             TagCategoriesSeeder::class,
             DailyReportsSeeder::class,
             QuestionsTableSeeder::class,
-            CommentsTableSeeder::class,
+            // CommentsTableSeeder::class,
         ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

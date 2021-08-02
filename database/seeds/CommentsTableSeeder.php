@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\Comment;
-use App\Models\Question;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
