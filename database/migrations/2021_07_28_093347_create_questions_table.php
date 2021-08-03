@@ -23,7 +23,7 @@ class CreateQuestionsTable extends Migration
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('tag_category_id')->references('id')->on('tag_categories')->onDelete('cascade');;
+            $table->foreign('tag_category_id')->references('id')->on('tag_categories')->onDelete('cascade');
         });
     }
 
