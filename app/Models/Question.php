@@ -103,9 +103,9 @@ class Question extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tagCategory()
+    public function tagCategories()
     {
-        return $this->belongsTo(TagCategory::class, 'tag_category_id');
+        return $this->belongsToMany(TagCategory::class, 'question_tag_category', 'question_id', 'tag_category_id');
     }
 
     public function comments()
