@@ -16,6 +16,7 @@ class QuestionsTableSeeder extends Seeder
     public function run()
     {
         DB::table('questions')->truncate();
+        DB::table('comments')->truncate();
 
         $tagCategories = TagCategory::all();
 
