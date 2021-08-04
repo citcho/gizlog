@@ -28,16 +28,23 @@ class Question extends Model
      */
     public function searchByRequests(array $attributes): LengthAwarePaginator
     {
-        return $this->with(['user', 'tagCategory'])
+        return $this->with(['user', 'tagCategories'])
             ->withCount('comments')
             ->when(isset($attributes['tag_category_id']), function ($query) use ($attributes) {
-                $query->where('tag_category_id', $attributes['tag_category_id']);
+                // $query->whereHas('tagCategories', function ($query) use ($attributes) {
+                //     dd($query->where('id', '=', $attributes['tag_category_id'])->get());
+                //     dd($query);
+                //     $query->where('tag_categories.id', [$attributes['tag_category_id']]);
+                // });
+                $query->join('question_tag_category', 'questions.id', '=', 'question_tag_category.question_id')
+                    ->where('question_tag_category.tag_category_id', $attributes['tag_category_id']);
             })
             ->when(isset($attributes['search_word']), function ($query) use ($attributes) {
                 $query->where('title', 'LIKE', '%' . $attributes['search_word'] . '%');
             })
             ->orderByDesc('created_at')
             ->paginate(config('const.paginate'));
+        // dd($a);
     }
 
     /**
