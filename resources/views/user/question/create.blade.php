@@ -6,12 +6,7 @@
   <div class="container">
     {!! Form::open(['route' => 'question.create.confirm']) !!}
       <div class="form-group">
-        {!! Form::select('tag_category_id', $tagCategories, null, ['class' => 'form-control selectpicker form-size-small', 'placeholder' => 'Select category']) !!}
-        @if ($errors->has('tag_category_id'))
-        @foreach ($errors->get('tag_category_id') as $error)
-        <span class="help-block">{{ $error }}</span>
-        @endforeach
-        @endif
+        @include('user.question.components.select_category', ['tagCategories' => $tagCategories])
       </div>
       <div class="form-group">
         {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'title']) !!}

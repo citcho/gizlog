@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,13 +13,13 @@ class TagCategory extends Model
     protected $table = 'tag_categories';
 
     /**
-     * カテゴリIDからカテゴリ名取得
+     * 複数カテゴリIDでのカテゴリ検索
      *
-     * @param integer $tagCategoryId
-     * @return string
+     * @param array $tagCategoryIdList
+     * @return Illuminate\Database\Eloquent\Collection;
      */
-    public function getTagCategoryName(int $tagCategoryId): string
+    public function fetchTagCategories(array $tagCategoryIdList): Collection
     {
-        return $this->find($tagCategoryId)->name;
+        return $this->whereIn('id', $tagCategoryIdList)->get();
     }
 }

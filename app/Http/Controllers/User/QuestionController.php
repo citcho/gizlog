@@ -131,6 +131,7 @@ class QuestionController extends Controller
             ->pluck('name', 'id');
 
         $myQuestion = $this->question
+            ->with('tagCategories')
             ->find($questionId);
 
         return view('user.question.edit', compact('tagCategories', 'myQuestion'));
@@ -146,12 +147,12 @@ class QuestionController extends Controller
     public function showEditConfirmPage(QuestionsRequest $request, int $questionId): View
     {
         $question = $this->question
+            ->with('tagCategories')
+            ->find($questionId)
             ->fill($request->all());
 
-        $question->tag_category_name = $this->tagCategory
-            ->getTagCategoryName($request->input('tag_category_id'));
-
-        $question->question_id = $questionId;
+        $question->tag_category_id_list = $this->tagCategory
+            ->fetchTagCategories($request->input('tag_category_id'));
 
         return view('user.question.edit_confirm', compact('question'));
     }
@@ -182,8 +183,8 @@ class QuestionController extends Controller
         $question = $this->question
             ->fill($request->all());
 
-        $question->tag_category_name = $this->tagCategory
-            ->getTagCategoryName($request->input('tag_category_id'));
+            $question->tag_category_id_list = $this->tagCategory
+            ->fetchTagCategories($request->input('tag_category_id'));
 
         return view('user.question.create_confirm', compact('question'));
     }

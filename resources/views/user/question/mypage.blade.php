@@ -21,7 +21,15 @@
         @foreach ($myQuestions as $question)
         <tr class="row">
           <td class="col-xs-2">{{ $question->created_at->format('Y-m-d') }}</td>
-          <td class="col-xs-1">{{ $question->tagCategory->name }}</td>
+          <td class="col-xs-1">
+            @foreach ($question->tagCategories as $tagCategory)
+            @if ($loop->last)
+            {{ $tagCategory->name }}&nbsp;
+            @else
+            {{ $tagCategory->name }}
+            @endif
+            @endforeach
+          </td>
           <td class="col-xs-5">{{ $question->title }}</td>
           <td class="col-xs-2"><span class="point-color">{{ $question->comments_count }}</span></td>
           <td class="col-xs-1">

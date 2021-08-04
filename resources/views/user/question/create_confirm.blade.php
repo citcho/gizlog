@@ -5,7 +5,10 @@
 <div class="main-wrap">
   <div class="panel panel-success">
     <div class="panel-heading">
-      {{ $question->tag_category_name }}の質問
+      @foreach ($question->tag_category_id_list as $tagCategory)
+      {{ $tagCategory->name }}&nbsp;
+      @endforeach
+      の質問
     </div>
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
@@ -24,7 +27,9 @@
   </div>
   <div class="btn-bottom-wrapper">
     {!! Form::open(['route' => 'question.create']) !!}
-      {!! Form::hidden('tag_category_id', $question->tag_category_id) !!}
+      @foreach ($question->tag_category_id_list as $tagCategory)
+      <input name="tag_category_id[]" type="hidden" value='{{ $tagCategory->id }}'>
+      @endforeach
       {!! Form::hidden('title', $question->title) !!}
       {!! Form::hidden('content', $question->content) !!}
       {!! Form::button('<i class="fa fa-check" aria-hidden="true"></i>', ['type' => 'submit', 'class' => 'btn btn-success']) !!}

@@ -6,7 +6,17 @@
   <div class="panel panel-success">
     <div class="panel-heading">
       <img src="{{ $question->user->avatar }}" class="avatar-img">
-      <p>{{ $question->user->name }}さんの質問&nbsp;&nbsp;({{ $question->tagCategory->name }})</p>
+      <p>{{ $question->user->name }}さんの質問&nbsp;
+        (
+        @foreach ($question->tagCategories as $tagCategory)
+        @if ($loop->last)
+        {{ $tagCategory->name }}
+        @else
+        {{ $tagCategory->name }}&nbsp;
+        @endif
+        @endforeach
+        )
+      </p>
       <p class="question-date">{{ $question->created_at->format('Y-m-d') }}</p>
     </div>
     <div class="table-responsive">

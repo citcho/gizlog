@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Question extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'questions';
 
     protected $fillable = [
-        'tag_category_id',
         'title',
         'content',
     ];
@@ -44,7 +47,6 @@ class Question extends Model
             })
             ->orderByDesc('created_at')
             ->paginate(config('const.paginate'));
-        // dd($a);
     }
 
     /**
@@ -54,7 +56,7 @@ class Question extends Model
      */
     public function fetchMyQuestions()
     {
-        return $this->with(['tagCategory'])
+        return $this->with(['tagCategories'])
             ->withCount('comments')
             ->where('user_id', Auth::id())
             ->orderByDesc('created_at')
@@ -69,9 +71,14 @@ class Question extends Model
      */
     public function storeMyQuestion(array $attributes)
     {
-        $question = $this->fill($attributes);
-        $question->user_id = Auth::id();
-        $question->save();
+        DB::transaction(function () use ($attributes) {
+            $question = $this->fill($attributes);
+            $question->user_id = Auth::id();
+            $question->save();
+
+            $question->tagCategories()
+                ->attach($attributes['tag_category_id']);
+        });
     }
 
     /**
@@ -83,9 +90,15 @@ class Question extends Model
      */
     public function editMyQuestion(array $attributes, int $questionId)
     {
-        $this->find($questionId)
-            ->fill($attributes)
-            ->save();
+        $question = $this->find($questionId);
+
+        DB::transaction(function () use ($attributes, $question) {
+            $question->fill($attributes)
+                ->save();
+
+            $question->tagCategories()
+                ->sync($attributes['tag_category_id']);
+        });
     }
 
     /**
