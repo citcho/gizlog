@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\DailyReport;
-use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DailyReportsSeeder extends Seeder
+class CommentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +13,8 @@ class DailyReportsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('daily_reports')->truncate();
+        DB::table('comments')->truncate();
 
-        factory(DailyReport::class, 100)->create();
+        factory(Comment::class, 100)->create();
     }
 }

@@ -1,23 +1,20 @@
 <div class="form-group">
   <div class="form-group form-inline">
-    <label class="checkbox-inline">
-      <input type="checkbox" name="tag_category_id[]" value="" checked="true">
-      front
+    @foreach ($tagCategories as $id => $name)
+    {!! Form::label('tag_category_' . $id, $name, ['class' => 'checkbox-inline']) !!}
+    @if ($myQuestion->tagCategories->contains($id))
+    {!! Form::checkbox('tag_category_id[]', $id, true, ['id' => 'tag_category_' . $id]) !!}
+    @else
+    {!! Form::checkbox('tag_category_id[]', $id, false, ['id' => 'tag_category_' . $id]) !!}
+    @endif
     </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="tag_category_id[]" value="" checked="true">
-      back
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="tag_category_id[]" value="" checked="true">
-      infra
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" name="tag_category_id[]" value="" checked="true">
-      others
-    </label>
+    @endforeach
   </div>
-  <div>
-    <span class="help-block"></span>
+  <div class="has-error">
+    @if ($errors->has('tag_category_id'))
+    @foreach ($errors->get('tag_category_id') as $error)
+    <span class="help-block">{{ $error }}</span>
+    @endforeach
+    @endif
   </div>
 </div>

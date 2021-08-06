@@ -5,24 +5,28 @@
 
 <div class="main-wrap">
   <div class="container">
-    <form>
+    {!! Form::open(['route' => ['question.edit.confirm', $myQuestion->id]]) !!}
       <div class="form-group">
-        <select name='tag_category_id' class="form-control selectpicker form-size-small">
-          <option value=""></option>
-            <option value=""></option>
-        </select>
-        <span class="help-block"></span>
+        @include('user.question.components.update_category', ['myQuestion' => $myQuestion, 'tagCategories' => $tagCategories])
       </div>
       <div class="form-group">
-        <input class="form-control" placeholder="title" name="title" type="text" value="">
-        <span class="help-block"></span>
+        {!! Form::text('title', $myQuestion->title, ['class' => 'form-control', 'placeholder' => 'title']) !!}
+        @if ($errors->has('title'))
+        @foreach ($errors->get('title') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
       </div>
       <div class="form-group">
-        <textarea class="form-control" placeholder="Please write down your question here..." name="content" cols="50" rows="10"></textarea>
-        <span class="help-block"></span>
+        {!! Form::textarea('content', $myQuestion->content, ['class' => 'form-control', 'placeholder' => 'Please write down your question here...', 'cols' => 50, 'rows' => 10]) !!}
+        @if ($errors->has('content'))
+        @foreach ($errors->get('content') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
       </div>
-      <input name="confirm" class="btn btn-success pull-right" type="submit" value="update">
-    </form>
+      {!! Form::button('UPDATE', ['type' => 'submit', 'class' => 'btn btn-success pull-right']) !!}
+    {!! Form::close() !!}
   </div>
 </div>
 
