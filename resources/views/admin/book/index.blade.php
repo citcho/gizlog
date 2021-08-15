@@ -4,13 +4,13 @@
 <h2 class="brand-header">書籍購入情報一覧</h2>
 <div class="main-wrap">
   <div class="btn-wrapper">
-    <form>
+    {!! Form::open(['route' => 'admin.book.csv', 'enctype' => 'multipart/form-data']) !!}
       <div class="form-group has-error">
-        <input type="file" class="form-control">
+        {!! Form::file('file', ['class' => 'form-control']) !!}
         <span class="help-block"></span>
-        <button type="submit" class="btn btn-icon"><i class="fa fa-file"></i></button>
+        {!! Form::button('<i class="fa fa-file"></i>', ['type' => 'submit', 'class' => 'btn btn-icon']) !!}
       </div>
-    </form>
+    {!! Form::close() !!}
   </div>
   <div class="content-wrapper table-responsive">
     <table class="table table-striped">

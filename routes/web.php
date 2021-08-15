@@ -84,6 +84,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.' ,'namespace' => 'Admin'], fu
     Route::get('question', function () {
         abort(404);
     });
+    Route::get('book', ['as' => 'book.index', 'uses' => 'BookController@index']);
+    Route::post('book/csv', ['as' => 'book.csv', 'uses' => 'BookController@importCsv']);
     Route::get('user', function () {
         abort(404);
     });
