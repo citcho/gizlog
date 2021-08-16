@@ -35,7 +35,13 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'csv'],
+        ],
+
+        'csv' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/csv_upload.log'),
+            'level' => 'info',
         ],
 
         'single' => [

@@ -58,6 +58,7 @@ class Book extends Model
 
         $insertableBookArray = [];
         $passedLineCount = 0;
+        $failedLine = 0;
         $bool = true;
 
         foreach ($csv as $lineNum => $line) {
@@ -69,6 +70,7 @@ class Book extends Model
 
             // カラムが全て埋まっていなかった場合は処理を中断
             if (count($line) !== 7) {
+                $failedLine = $lineNum;
                 $bool = false;
                 break;
             }
@@ -91,6 +93,6 @@ class Book extends Model
             $this->insert($insertableBookArray);
         }
 
-        return ['passed' => $bool, 'passed_count' => $passedLineCount];
+        return ['passed' => $bool, 'passed_count' => $passedLineCount, 'failed_line' => $failedLine];
     }
 }

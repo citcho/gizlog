@@ -39,7 +39,7 @@
           <td class="col-xs-4">{{ $book->title }}</td>
           <td class="col-xs-2">{{ $book->author }}</td>
           <td class="col-xs-2">{{ $book->publisher }}</td>
-          <td class="col-xs-1">{{ $book->price }}</td>
+          <td class="col-xs-1">{{ number_format($book->price) }}</td>
           <td class="col-xs-2">{{ $book->purchase_date }}</td>
         </tr>
         @endforeach
