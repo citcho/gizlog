@@ -4,13 +4,21 @@
 <h2 class="brand-header">書籍購入情報一覧</h2>
 <div class="main-wrap">
   <div class="btn-wrapper">
-    <form>
-      <div class="form-group has-error">
-        <input type="file" class="form-control">
-        <span class="help-block"></span>
-        <button type="submit" class="btn btn-icon"><i class="fa fa-file"></i></button>
+    {!! Form::open(['route' => 'admin.book.csv', 'enctype' => 'multipart/form-data']) !!}
+      <div class="form-group @if ($errors->has('file')) has-error @endif">
+        {!! Form::file('file') !!}
+        @if ($errors->has('file'))
+        @foreach ($errors->get('file') as $error)
+        <span class="help-block">{{ $error }}</span>
+        @endforeach
+        @endif
+
+        @if (session('flash_message'))
+        <span class="help-block">{{ session('flash_message') }}</span>
+        @endif
+        {!! Form::button('<i class="fa fa-file"></i>', ['type' => 'submit', 'class' => 'btn btn-icon']) !!}
       </div>
-    </form>
+    {!! Form::close() !!}
   </div>
   <div class="content-wrapper table-responsive">
     <table class="table table-striped">
@@ -25,16 +33,19 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($books as $book)
         <tr class="row">
-          <td class="col-xs-1"><img src="" alt="" class="avatar-img"></td>
-          <td class="col-xs-4"></td>
-          <td class="col-xs-2"></td>
-          <td class="col-xs-2"></td>
-          <td class="col-xs-1"></td>
-          <td class="col-xs-2"></td>
+          <td class="col-xs-1"><img src="{{ $book->user->avatar }}" alt="" class="avatar-img"></td>
+          <td class="col-xs-4">{{ $book->title }}</td>
+          <td class="col-xs-2">{{ $book->author }}</td>
+          <td class="col-xs-2">{{ $book->publisher }}</td>
+          <td class="col-xs-1">{{ number_format($book->price) }}</td>
+          <td class="col-xs-2">{{ $book->purchase_date }}</td>
         </tr>
+        @endforeach
       </tbody>
     </table>
+    <div class="text-center">{{ $books->links() }}</div>
   </div>
 </div>
 
