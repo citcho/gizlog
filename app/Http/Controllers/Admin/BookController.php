@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BookRequest;
 use App\Models\Book;
 
 class BookController extends Controller
@@ -17,12 +17,18 @@ class BookController extends Controller
 
     public function index()
     {
-        return view('admin.book.index');
+        $books = $this->book->fetchAllRecords();
+        return view('admin.book.index', compact('books'));
     }
 
-    public function importCsv(Request $request)
+    public function importCsv(BookRequest $request)
     {
-        $this->book->bulkInsert($request->file('file')->path());
-        return redirect()->route('admin.book.index');
+        $result = $this->book->bulkInsert($request->file('file')->path());
+
+        if ($result['passed']) {
+            return redirect()->route('admin.book.index')->with('flash_message', $result['passed_count'] . '件登録しました。');
+        } else {
+            return redirect()->route('admin.book.index')->with('flash_message', '登録に失敗しました。<br>CSVファイルに不備があります。');
+        }
     }
 }

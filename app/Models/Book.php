@@ -11,6 +11,18 @@ class Book extends Model
 
     protected $table = 'books';
 
+    protected $perPage = 10;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function fetchAllRecords()
+    {
+        return $this->with('user')->orderByDesc('created_at')->paginate();
+    }
+
     private function makeSplFileObject(string $filePath)
     {
         setlocale(LC_ALL, 'ja_JP.UTF-8');
@@ -45,6 +57,8 @@ class Book extends Model
         $csv = $this->makeSplFileObject($filePath);
 
         $insertableBookArray = [];
+        $passedLineCount = 0;
+        $bool = true;
 
         foreach ($csv as $lineNum => $line) {
 
@@ -53,14 +67,17 @@ class Book extends Model
                 continue;
             }
 
-            // カラムが全て埋まっていなかった場合はスキップ
+            // カラムが全て埋まっていなかった場合は処理を中断
             if (count($line) !== 7) {
-                $failedNum[] = $lineNum;
-                continue;
+                $bool = false;
+                break;
             }
 
             // 行情報をinsert()引数に受け入れ可能な配列へ変換
             $insertableBookArray[] = $this->makeBookAttributes($line);
+
+            // 成功した行のカウント
+            $passedLineCount++;
 
             // 500件溜まったタイミングでinsert処理実行
             if (count($insertableBookArray) === 500) {
@@ -74,6 +91,6 @@ class Book extends Model
             $this->insert($insertableBookArray);
         }
 
-        return 0;
+        return ['passed' => $bool, 'passed_count' => $passedLineCount];
     }
 }
