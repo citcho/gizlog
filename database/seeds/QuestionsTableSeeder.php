@@ -20,12 +20,12 @@ class QuestionsTableSeeder extends Seeder
 
         $tagCategories = TagCategory::all();
 
-        factory(Question::class, 200)->create()
+        factory(Question::class, 3000)->create()
             ->each(function($question) use ($tagCategories) {
                 $question->tagCategories()
                     ->attach($tagCategories->random(rand(1, 4)));
 
-                factory(Comment::class, 200)->create([
+                factory(Comment::class, 10)->create([
                     'question_id' => $question->id,
                 ]);
             });
