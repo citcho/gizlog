@@ -32,7 +32,7 @@ class UsersTableSeeder extends Seeder
                 'created_at'    => Carbon::create(2017, 7, 16),
             ]
         ]);
-        factory(User::class, 500)->create();
+        factory(User::class, 496)->create();
     }
 }
 
