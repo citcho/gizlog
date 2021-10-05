@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TagCategory extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'tag_categories';
 
     /**
