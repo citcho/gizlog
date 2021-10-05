@@ -43,6 +43,21 @@ class QuestionController extends Controller
         return view('user.question.index', compact('questions', 'tagCategories'));
     }
 
+    public function showUserRankingPage(): View
+    {
+        return view('user.question.ranking.question');
+    }
+
+    public function showCategoryRankingPage(): View
+    {
+        return view('user.question.ranking.tag');
+    }
+
+    public function showCommentRankingPage(): View
+    {
+        return view('user.question.ranking.comment');
+    }
+
     /**
      * マイページ表示
      *
