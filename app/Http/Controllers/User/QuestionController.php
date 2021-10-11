@@ -46,18 +46,33 @@ class QuestionController extends Controller
         return view('user.question.index', compact('questions', 'tagCategories'));
     }
 
+    /**
+     * ユーザー質問数ランキングページ表示
+     *
+     * @return View
+     */
     public function showUserRankingPage(): View
     {
         $userRanking = $this->rankingService->fetchAllUserRanking();
         return view('user.question.ranking.question', compact('userRanking'));
     }
 
+    /**
+     * カテゴリ別質問数ランキングページ表示
+     *
+     * @return View
+     */
     public function showCategoryRankingPage(): View
     {
         $categoryRanking = $this->rankingService->fetchAllCategoryRanking();
         return view('user.question.ranking.tag', compact('categoryRanking'));
     }
 
+    /**
+     * ユーザーコメント数ランキングページ表示
+     *
+     * @return View
+     */
     public function showCommentRankingPage(): View
     {
         $commentRanking = $this->rankingService->fetchAllCommentRanking();

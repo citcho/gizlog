@@ -2,13 +2,22 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 Class RankingService
 {
+    /**
+     * １ページあたりのランキング表示数
+     */
     private const RANKING_PER_PAGE = 20;
 
-    public function updateUserRanking()
+    /**
+     * user_rankingテーブル更新処理
+     * 
+     * @return void
+     */
+    public function updateUserRanking(): void
     {
         DB::table('user_ranking')->truncate();
 
@@ -24,7 +33,12 @@ Class RankingService
         DB::table('user_ranking')->insert(json_decode(json_encode($newUserRanking), true));
     }
 
-    public function updateCommentRanking()
+    /**
+     * comment_rankingテーブル更新処理
+     * 
+     * @return void
+     */
+    public function updateCommentRanking(): void
     {
         DB::table('comment_ranking')->truncate();
 
@@ -40,7 +54,12 @@ Class RankingService
         DB::table('comment_ranking')->insert(json_decode(json_encode($newCommentRanking), true));
     }
 
-    public function updateCategoryRanking()
+    /**
+     * category_rankingテーブル更新処理
+     * 
+     * @return void
+     */
+    public function updateCategoryRanking(): void
     {
         DB::table('category_ranking')->truncate();
 
@@ -55,7 +74,12 @@ Class RankingService
         DB::table('category_ranking')->insert(json_decode(json_encode($newCommentRanking), true));
     }
 
-    public function fetchAllUserRanking()
+    /**
+     * 全てのuser_rankingレコード取得処理
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function fetchAllUserRanking(): LengthAwarePaginator
     {
         return DB::table('user_ranking')
             ->select('user_ranking.question_count', 'users.name', 'users.avatar')
@@ -64,7 +88,12 @@ Class RankingService
             ->paginate(self::RANKING_PER_PAGE);
     }
 
-    public function fetchAllCommentRanking()
+    /**
+     * 全てのcomment_rankingレコード取得処理
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function fetchAllCommentRanking(): LengthAwarePaginator
     {
         return DB::table('comment_ranking')
             ->select('comment_ranking.comment_count', 'users.name', 'users.avatar')
@@ -73,7 +102,12 @@ Class RankingService
             ->paginate(self::RANKING_PER_PAGE);
     }
 
-    public function fetchAllCategoryRanking()
+    /**
+     * 全てのcategory_rankingレコード取得処理
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function fetchAllCategoryRanking(): LengthAwarePaginator
     {
         return DB::table('category_ranking')
             ->select('category_ranking.question_count', 'tag_categories.name')
