@@ -2,32 +2,35 @@
 
 namespace App\Console\Commands;
 
+use App\Services\RankingService;
 use Illuminate\Console\Command;
 
 class UpdateCommentRanking extends Command
 {
+    private $rankingService;
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'comment_ranking:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'This will update a user ranking table.';
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RankingService $rankingService)
     {
         parent::__construct();
+        $this->rankingService = $rankingService;
     }
 
     /**
@@ -37,6 +40,6 @@ class UpdateCommentRanking extends Command
      */
     public function handle()
     {
-        //
+        $this->rankingService->updateCommentRanking();
     }
 }
