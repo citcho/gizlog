@@ -59,6 +59,11 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
 
             Route::delete('question/{id}', ['as' => 'delete', 'uses' => 'QuestionController@delete']);
         });
+
+    Route::name('attendance.')
+        ->group(function () {
+            Route::get('attendance', ['as' => 'index', 'uses' => 'AttendanceController@index']);
+        });
 });
 
 // 管理者側画面
