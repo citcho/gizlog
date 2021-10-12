@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Faker\Generator as Faker;
 
 /*
@@ -13,11 +14,12 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'slack_user_id' => $faker->asciify('**********'),
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'avatar' => 'https://i.pinimg.com/236x/18/64/f1/1864f1c531cf2ee82c7400bb298f4b2d.jpg',
         'remember_token' => str_random(10),
     ];
 });

@@ -4,12 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TagCategory extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'tag_categories';
 
     /**
