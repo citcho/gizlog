@@ -25,7 +25,7 @@ class AttendanceRequest extends FormRequest
     {
         return [
             'date' => 'required|date_format:Y-m-d|before_or_equal:today',
-            'start_time' => 'required|date_format:H:i:s',
+            'start_time' => 'required|date_format:H:i',
         ];
     }
 
