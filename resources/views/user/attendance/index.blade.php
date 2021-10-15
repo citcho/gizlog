@@ -13,7 +13,13 @@
     </div>
   </div>
   <div class="button-holder">
-    <a class="button @if ($attendance->isRegistered) end-btn @else start_btn @endif" id="register-attendance" href=#openModal>@if ($attendance->isRegistered) 退社時間登録 @else 出社時間登録 @endif</a>
+    @if (!$attendance->isClockIn && !$attendance->isClockOut)
+      <a class="button start-btn" id="register-attendance" href=#openModal>出社時間登録</a>
+    @elseif ($attendance->isClockIn && !$attendance->isClockOut)
+      <a class="button end-btn" id="register-attendance" href=#openModal>退社時間登録</a>
+    @else
+      <a class="button disabled" id="register-attendance" href=#openModal>退社済み</a>
+    @endif
   </div>
   @if ($errors->any())
     <div class="alert alert-danger">
@@ -41,7 +47,7 @@
   <div>
     <div class="register-text-wrap"></div>
     <div class="register-btn-wrap">
-    @if ($attendance->isRegistered)
+    @if ($attendance->isClockIn && !$attendance->isClockOut)
       {!! Form::open(['route' => 'attendance.store.end_time']) !!}
         {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
         {!! Form::hidden('end_time', null, ['id' => 'time-target']) !!}

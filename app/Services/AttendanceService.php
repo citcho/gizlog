@@ -23,7 +23,7 @@ Class AttendanceService
 
     public function storeStartTime(array $attributes)
     {   
-        if (!$this->attendance->isRegistered) {
+        if (!$this->attendance->isClockIn && !$this->attendance->isClockOut) {
             $this->attendance->user_id = Auth::id();
             $this->attendance->date = $attributes['date'];
             $this->attendance->start_time = $attributes['start_time'];
@@ -34,7 +34,7 @@ Class AttendanceService
 
     public function storeEndTime(array $attributes)
     {   
-        if ($this->attendance->isRegistered) {
+        if ($this->attendance->isClockIn && !$this->attendance->isClockOut) {
             $attendance = $this->attendance
                 ->where('user_id', Auth::id())
                 ->where('date', now()->format('Y-m-d'))
