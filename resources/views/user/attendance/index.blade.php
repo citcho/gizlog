@@ -15,6 +15,15 @@
   <div class="button-holder">
     <a class="button start-btn" id="register-attendance" href=#openModal>出社時間登録</a>
   </div>
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul class="text-center">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
   <ul class="button-wrap">
     <li>
       <a class="at-btn absence" href="{{ route('attendance.show.absence') }}">欠席登録</a>
@@ -32,12 +41,12 @@
   <div>
     <div class="register-text-wrap"></div>
     <div class="register-btn-wrap">
-      <form>
-        <input id="date-time-target" name="start_time" type="hidden" value="2019-07-03 12:38:41">
-        <input name="date" type="hidden" value="2019-07-03">
+      {!! Form::open(['route' => 'attendance.store.start_time']) !!}
+        {!! Form::hidden('start_time', null, ['id' => 'time-target']) !!}
+        {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
         <a href="#close" class="cancel-btn">Cancel</a>
-        <input class="yes-btn" type="submit" value="Yes">
-      </form>
+        {!! Form::submit('Yes', ['class' => 'yes-btn']) !!}
+      {!! Form::close() !!}
     </div>
   </div>
 </div>

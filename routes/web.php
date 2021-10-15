@@ -64,9 +64,11 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
         ->prefix('attendance')
         ->group(function () {
             Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
-            Route::get('/absence', ['as' => 'show.absence', 'uses' => 'AttendanceController@showAbsenceRegistrationPage']);
-            Route::get('/modify', ['as' => 'show.modify', 'uses' => 'AttendanceController@showModifyRequestPage']);
-            Route::get('/mypage', ['as' => 'show.mypage', 'uses' => 'AttendanceController@showMyPage']);
+            Route::get('absence', ['as' => 'show.absence', 'uses' => 'AttendanceController@showAbsenceRegistrationPage']);
+            Route::get('modify', ['as' => 'show.modify', 'uses' => 'AttendanceController@showModifyRequestPage']);
+            Route::get('mypage', ['as' => 'show.mypage', 'uses' => 'AttendanceController@showMyPage']);
+
+            Route::post('/clock_in', ['as' => 'store.start_time', 'uses' => 'AttendanceController@clockIn']);
         });
 });
 
