@@ -17,20 +17,20 @@
   </div>
   <ul class="button-wrap">
     <li>
-      <a class="at-btn absence" href="/attendance/absence">欠席登録</a>
+      <a class="at-btn absence" href="{{ route('attendance.show.absence') }}">欠席登録</a>
     </li>
     <li>
-      <a class="at-btn modify" href="/attendance/modify">修正申請</a>
+      <a class="at-btn modify" href="{{ route('attendance.show.modify') }}">修正申請</a>
     </li>
     <li>
-      <a class="at-btn my-list" href="/attendance/mypage">マイページ</a>
+      <a class="at-btn my-list" href="{{ route('attendance.show.mypage') }}">マイページ</a>
     </li>
   </ul>
 </div>
 
 <div id="openModal" class="modalDialog">
   <div>
-    <div class="register-text-wrap"><p>12:38 で出社時間を登録しますか？</p></div>
+    <div class="register-text-wrap"></div>
     <div class="register-btn-wrap">
       <form>
         <input id="date-time-target" name="start_time" type="hidden" value="2019-07-03 12:38:41">
