@@ -17,7 +17,9 @@ class AttendanceController extends Controller
 
     public function index()
     {
-        return view('user.attendance.index');
+        $attendance = $this->attendanceService->getAttendance();
+
+        return view('user.attendance.index', compact('attendance'));
     }
 
     public function showAbsenceRegistrationPage()
@@ -38,6 +40,13 @@ class AttendanceController extends Controller
     public function clockIn(AttendanceRequest $request)
     {
         $this->attendanceService->storeStartTime($request->all());
+
+        return redirect()->route('attendance.index');
+    }
+
+    public function clockOut(AttendanceRequest $request)
+    {
+        $this->attendanceService->storeEndTime($request->all());
 
         return redirect()->route('attendance.index');
     }

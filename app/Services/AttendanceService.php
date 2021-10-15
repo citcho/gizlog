@@ -16,6 +16,11 @@ Class AttendanceService
         $this->attendance = $attendance;
     }
 
+    public function getAttendance()
+    {
+        return $this->attendance;
+    }
+
     public function storeStartTime(array $attributes)
     {   
         if (!$this->attendance->isRegistered) {
@@ -24,6 +29,20 @@ Class AttendanceService
             $this->attendance->start_time = $attributes['start_time'];
     
             $this->attendance->save();
+        }
+    }
+
+    public function storeEndTime(array $attributes)
+    {   
+        if ($this->attendance->isRegistered) {
+            $attendance = $this->attendance
+                ->where('user_id', Auth::id())
+                ->where('date', now()->format('Y-m-d'))
+                ->first();
+
+            $attendance->end_time = $attributes['end_time'];
+    
+            $attendance->save();
         }
     }
 }

@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="button-holder">
-    <a class="button start-btn" id="register-attendance" href=#openModal>出社時間登録</a>
+    <a class="button @if ($attendance->isRegistered) end-btn @else start_btn @endif" id="register-attendance" href=#openModal>@if ($attendance->isRegistered) 退社時間登録 @else 出社時間登録 @endif</a>
   </div>
   @if ($errors->any())
     <div class="alert alert-danger">
@@ -41,9 +41,15 @@
   <div>
     <div class="register-text-wrap"></div>
     <div class="register-btn-wrap">
-      {!! Form::open(['route' => 'attendance.store.start_time']) !!}
-        {!! Form::hidden('start_time', null, ['id' => 'time-target']) !!}
+    @if ($attendance->isRegistered)
+      {!! Form::open(['route' => 'attendance.store.end_time']) !!}
         {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
+        {!! Form::hidden('end_time', null, ['id' => 'time-target']) !!}
+    @else
+      {!! Form::open(['route' => 'attendance.store.start_time']) !!}
+        {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
+        {!! Form::hidden('start_time', null, ['id' => 'time-target']) !!}
+    @endif
         <a href="#close" class="cancel-btn">Cancel</a>
         {!! Form::submit('Yes', ['class' => 'yes-btn']) !!}
       {!! Form::close() !!}
