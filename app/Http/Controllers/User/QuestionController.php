@@ -221,7 +221,7 @@ class QuestionController extends Controller
 
         $question->tag_category_id_list = $this->tagCategory
             ->fetchTagCategories($request->input('tag_category_id'));
-        
+
         return view('user.question.create_confirm', compact('question'));
     }
 }
