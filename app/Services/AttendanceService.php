@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\Attendance;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 Class AttendanceService
@@ -44,5 +45,14 @@ Class AttendanceService
     
             $attendance->save();
         }
+    }
+
+    public function absent()
+    {
+        $attendance = $this->attendance->where('date', now()->format('Y-m-d'))
+            ->whereNotNull('start_time')
+            ->whereNull('end_time')
+            ->first();
+        dd($attendance);
     }
 }
