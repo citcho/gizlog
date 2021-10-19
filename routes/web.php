@@ -71,7 +71,7 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::post('/clock_in', ['as' => 'store.start_time', 'uses' => 'AttendanceController@clockIn']);
             Route::post('/clock_out', ['as' => 'store.end_time', 'uses' => 'AttendanceController@clockOut']);
 
-            Route::post('/absence', ['as' => 'store.end_time', 'uses' => 'AttendanceController@clockOut']);
+            Route::post('/absence', ['as' => 'absence', 'uses' => 'AttendanceController@absent']);
         });
 });
 
