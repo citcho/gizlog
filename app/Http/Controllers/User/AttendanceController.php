@@ -50,4 +50,9 @@ class AttendanceController extends Controller
 
         return redirect()->route('attendance.index');
     }
+
+    public function absent()
+    {
+        $this->attendanceService->absent();
+    }
 }
