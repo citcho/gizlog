@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateUserRankingTable extends Migration
 {
@@ -14,8 +15,10 @@ class CreateUserRankingTable extends Migration
     public function up()
     {
         Schema::create('user_ranking', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('question_count');
+            $table->unsignedInteger('user_id')->primary();
+            $table->unsignedInteger('question_count')->index();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -26,6 +29,8 @@ class CreateUserRankingTable extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::dropIfExists('user_ranking');
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
