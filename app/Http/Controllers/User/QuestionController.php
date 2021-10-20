@@ -53,7 +53,7 @@ class QuestionController extends Controller
      */
     public function showUserRankingPage(): View
     {
-        $userRanking = $this->rankingService->fetchAllUserRanking();
+        $userRanking = $this->rankingService->fetchAllUserRankingSummary();
         return view('user.question.ranking.question', compact('userRanking'));
     }
 
@@ -64,7 +64,7 @@ class QuestionController extends Controller
      */
     public function showCategoryRankingPage(): View
     {
-        $categoryRanking = $this->rankingService->fetchAllCategoryRanking();
+        $categoryRanking = $this->rankingService->fetchAllCategoryRankingSummary();
         return view('user.question.ranking.tag', compact('categoryRanking'));
     }
 
@@ -75,7 +75,7 @@ class QuestionController extends Controller
      */
     public function showCommentRankingPage(): View
     {
-        $commentRanking = $this->rankingService->fetchAllCommentRanking();
+        $commentRanking = $this->rankingService->fetchAllCommentRankingSummary();
         return view('user.question.ranking.comment', compact('commentRanking'));
     }
 
@@ -221,7 +221,7 @@ class QuestionController extends Controller
 
         $question->tag_category_id_list = $this->tagCategory
             ->fetchTagCategories($request->input('tag_category_id'));
-        
+
         return view('user.question.create_confirm', compact('question'));
     }
 }

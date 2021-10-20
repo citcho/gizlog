@@ -26,7 +26,6 @@ Class RankingService
             ->join('questions', 'users.id', '=', 'questions.user_id')
             ->groupBy('user_id')
             ->whereNull('questions.deleted_at')
-            ->orderByDesc('question_count')
             ->get()
             ->toArray();
 
@@ -47,7 +46,6 @@ Class RankingService
             ->join('comments', 'users.id', '=', 'comments.user_id')
             ->groupBy('user_id')
             ->whereNull('comments.deleted_at')
-            ->orderByDesc('comment_count')
             ->get()
             ->toArray();
 
@@ -63,23 +61,22 @@ Class RankingService
     {
         DB::table('category_ranking')->truncate();
 
-        $newCommentRanking = DB::table('tag_categories')
+        $newCategoryRanking = DB::table('tag_categories')
             ->select('tag_categories.id as category_id', DB::raw('COUNT(question_tag_category.question_id) as question_count'))
             ->join('question_tag_category', 'tag_categories.id', '=', 'question_tag_category.tag_category_id')
             ->groupBy('category_id')
-            ->orderByDesc('question_count')
             ->get()
             ->toArray();
 
-        DB::table('category_ranking')->insert(json_decode(json_encode($newCommentRanking), true));
+        DB::table('category_ranking')->insert(json_decode(json_encode($newCategoryRanking), true));
     }
 
     /**
-     * 全てのuser_rankingレコード取得処理
+     * user_rankingサマリーテーブルの全てのレコード取得処理
      * 
      * @return LengthAwarePaginator
      */
-    public function fetchAllUserRanking(): LengthAwarePaginator
+    public function fetchAllUserRankingSummary(): LengthAwarePaginator
     {
         return DB::table('user_ranking')
             ->select('user_ranking.question_count', 'users.name', 'users.avatar')
@@ -89,11 +86,11 @@ Class RankingService
     }
 
     /**
-     * 全てのcomment_rankingレコード取得処理
+     * comment_rankingサマリーテーブルの全てのレコード取得処理
      * 
      * @return LengthAwarePaginator
      */
-    public function fetchAllCommentRanking(): LengthAwarePaginator
+    public function fetchAllCommentRankingSummary(): LengthAwarePaginator
     {
         return DB::table('comment_ranking')
             ->select('comment_ranking.comment_count', 'users.name', 'users.avatar')
@@ -103,11 +100,11 @@ Class RankingService
     }
 
     /**
-     * 全てのcategory_rankingレコード取得処理
+     * category_rankingサマリーテーブルの全てのレコード取得処理
      * 
      * @return LengthAwarePaginator
      */
-    public function fetchAllCategoryRanking(): LengthAwarePaginator
+    public function fetchAllCategoryRankingSummary(): LengthAwarePaginator
     {
         return DB::table('category_ranking')
             ->select('category_ranking.question_count', 'tag_categories.name')
