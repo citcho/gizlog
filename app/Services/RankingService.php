@@ -26,7 +26,6 @@ Class RankingService
             ->join('questions', 'users.id', '=', 'questions.user_id')
             ->groupBy('user_id')
             ->whereNull('questions.deleted_at')
-            ->orderByDesc('question_count')
             ->get()
             ->toArray();
 
@@ -47,7 +46,6 @@ Class RankingService
             ->join('comments', 'users.id', '=', 'comments.user_id')
             ->groupBy('user_id')
             ->whereNull('comments.deleted_at')
-            ->orderByDesc('comment_count')
             ->get()
             ->toArray();
 
@@ -67,7 +65,6 @@ Class RankingService
             ->select('tag_categories.id as category_id', DB::raw('COUNT(question_tag_category.question_id) as question_count'))
             ->join('question_tag_category', 'tag_categories.id', '=', 'question_tag_category.tag_category_id')
             ->groupBy('category_id')
-            ->orderByDesc('question_count')
             ->get()
             ->toArray();
 
