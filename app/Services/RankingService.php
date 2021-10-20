@@ -61,14 +61,14 @@ Class RankingService
     {
         DB::table('category_ranking')->truncate();
 
-        $newCommentRanking = DB::table('tag_categories')
+        $newCategoryRanking = DB::table('tag_categories')
             ->select('tag_categories.id as category_id', DB::raw('COUNT(question_tag_category.question_id) as question_count'))
             ->join('question_tag_category', 'tag_categories.id', '=', 'question_tag_category.tag_category_id')
             ->groupBy('category_id')
             ->get()
             ->toArray();
 
-        DB::table('category_ranking')->insert(json_decode(json_encode($newCommentRanking), true));
+        DB::table('category_ranking')->insert(json_decode(json_encode($newCategoryRanking), true));
     }
 
     /**
