@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\AbsenceRequest;
 use App\Http\Requests\User\AttendanceRequest;
 use App\Services\AttendanceService;
 
@@ -51,8 +52,9 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.index');
     }
 
-    public function absent()
+    public function absent(AbsenceRequest $request)
     {
-        $this->attendanceService->absent();
+        $this->attendanceService->absent($request->all());
+        return redirect()->route('attendance.index');
     }
 }

@@ -30,6 +30,11 @@
       </ul>
     </div>
   @endif
+  @if (session()->has('failed_absent_msg'))
+  <div class="text-center">
+    <span class="help-block">{{ session()->get('failed_absent_msg') }}</span>
+  </div>
+  @endif
   <ul class="button-wrap">
     <li>
       <a class="at-btn absence" href="{{ route('attendance.show.absence') }}">欠席登録</a>
