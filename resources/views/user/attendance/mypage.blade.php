@@ -9,14 +9,14 @@
       <p>学習経過日数</p>
       <div class="study-hour-box clearfix">
         <div class="userinfo-box"><img src="{{ Auth::user()->avatar }}"></div>
-        <p class="study-hour"><span>3</span>日</p>
+        <p class="study-hour"><span>{{ $studyDays }}</span>日</p>
       </div>
     </div>
     <div class="my-info">
       <p>累計学習時間</p>
       <div class="study-hour-box clearfix">
         <div class="userinfo-box"><img src="{{ Auth::user()->avatar }}"></div>
-        <p class="study-hour"><span>18</span>時間</p>
+        <p class="study-hour"><span>{{ $totalStudyHours }}</span>時間</p>
       </div>
     </div>
   </div>

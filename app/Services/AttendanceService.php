@@ -87,4 +87,22 @@ Class AttendanceService
             ->orderByDesc('date')
             ->get();
     }
+
+    public function fetchAllStudyHours($attendances)
+    {
+        $totalHours = 0;
+        $totalMinutes = 0;
+        
+        foreach ($attendances as $attendance) {
+            $startTime = new \DateTime($attendance->start_time);
+            $endTime = new \DateTime($attendance->end_time);
+            
+            $diff = $startTime->diff($endTime);
+        
+            $totalHours += $diff->format('%h');
+            $totalMinutes += $diff->format('%i');
+        }
+        
+        return $totalHours + round($totalMinutes / 60);
+    }
 }

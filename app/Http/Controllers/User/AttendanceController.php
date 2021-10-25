@@ -37,7 +37,14 @@ class AttendanceController extends Controller
     public function showMyPage()
     {
         $myAttendances = $this->attendanceService->fetchAllMyAttendances();
-        return view('user.attendance.mypage', compact('myAttendances'));
+        $attended = $myAttendances
+            ->filter(function ($attendance){
+                return $attendance->is_absent === 0;
+            });
+        $studyDays = $attended->count();
+        $totalStudyHours = $this->attendanceService->fetchAllStudyHours($attended);
+
+        return view('user.attendance.mypage', compact('myAttendances', 'studyDays', 'totalStudyHours'));
     }
 
     public function clockIn(AttendanceRequest $request)
