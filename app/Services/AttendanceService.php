@@ -54,17 +54,31 @@ Class AttendanceService
             ->where('user_id', Auth::id())
             ->first();
 
-        if (is_null($todayAttendance)) {
+        if (isset($todayAttendance)) {
+            $todayAttendance->absent_reason = $attributes['absent_reason'];
+            $todayAttendance->is_absent = 1;
+
+            $todayAttendance->save();
+        } else {
             $todayAttendance = $this->attendance->fill($attributes);
             $todayAttendance->user_id = Auth::id();
             $todayAttendance->is_absent = 1;
 
             $todayAttendance->save();
-        } else {
-            $todayAttendance->absent_reason = $attributes['absent_reason'];
-            $todayAttendance->is_absent = 1;
+        }
+    }
 
-            $todayAttendance->save();
+    public function modify(array $attributes)
+    {
+        $attendance = $this->attendance
+            ->where('date', $attributes['date'])
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (isset($attendance)) {
+            $attendance->request_content = $attributes['request_content'];
+
+            $attendance->save();
         }
     }
 }
