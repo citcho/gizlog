@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Absence;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,12 +11,10 @@ use Illuminate\Support\Facades\DB;
 Class AttendanceService
 {
     private $attendance;
-    private $absence;
 
-    public function __construct(Attendance $attendance, Absence $absence)
+    public function __construct(Attendance $attendance)
     {
         $this->attendance = $attendance;
-        $this->absence = $absence;
     }
 
     public function getAttendance()
@@ -58,28 +55,16 @@ Class AttendanceService
             ->first();
 
         if (is_null($todayAttendance)) {
-            DB::transaction(function () use ($attributes) {
-                $todayAttendance = $this->attendance
-                    ->create([
-                        'user_id' => Auth::id(),
-                        'date' => now()->format('Y-m-d'),
-                    ]);
-                $this->absence->create([
-                    'attendance_id' => $todayAttendance->id,
-                    'is_absent' => 1,
-                    'reason' => $attributes['reason'],
-                ]);
-            });
+            $todayAttendance = $this->attendance->fill($attributes);
+            $todayAttendance->user_id = Auth::id();
+            $todayAttendance->is_absent = 1;
+
+            $todayAttendance->save();
         } else {
-            if (!$todayAttendance->hasAbsenceRequest) {
-                $this->absence->create([
-                    'attendance_id' => $todayAttendance->id,
-                    'is_absent' => 1,
-                    'reason' => $attributes['reason'],
-                ]);
-            } else {
-                session()->flash('failed_absent_msg', '既に欠席登録がされています。');
-            }
+            $todayAttendance->absent_reason = $attributes['absent_reason'];
+            $todayAttendance->is_absent = 1;
+
+            $todayAttendance->save();
         }
     }
 }

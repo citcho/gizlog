@@ -13,7 +13,7 @@ class AttendanceTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('attendance')->truncate();
+        DB::table('attendances')->truncate();
         factory(Attendance::class, 100)->create();
     }
 }

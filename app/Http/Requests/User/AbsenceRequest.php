@@ -24,7 +24,7 @@ class AbsenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'reason' => 'required|max:500'
+            'absent_reason' => 'required|max:500',
         ];
     }
 
