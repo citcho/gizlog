@@ -13,11 +13,11 @@
     </div>
   </div>
   <div class="button-holder">
-    @if (!$attendance->isClockIn && !$attendance->isClockOut)
+    @if (is_null($myTodayAttendance))
       <a class="button start-btn" id="register-attendance" href=#openModal>出社時間登録</a>
-    @elseif ($attendance->isClockIn && !$attendance->isClockOut)
+    @elseif ($myTodayAttendance->isClockIn && !$myTodayAttendance->isAbsence)
       <a class="button end-btn" id="register-attendance" href=#openModal>退社時間登録</a>
-    @else
+    @elseif ($myTodayAttendance->isClockOut && !$myTodayAttendance->isAbsence)
       <a class="button disabled" id="register-attendance" href=#openModal>退社済み</a>
     @endif
   </div>
@@ -47,14 +47,14 @@
   <div>
     <div class="register-text-wrap"></div>
     <div class="register-btn-wrap">
-    @if ($attendance->isClockIn && !$attendance->isClockOut)
-      {!! Form::open(['route' => 'attendance.store.end_time']) !!}
-        {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
-        {!! Form::hidden('end_time', null, ['id' => 'time-target']) !!}
-    @else
+    @if (is_null($myTodayAttendance))
       {!! Form::open(['route' => 'attendance.store.start_time']) !!}
         {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
         {!! Form::hidden('start_time', null, ['id' => 'time-target']) !!}
+    @elseif ($myTodayAttendance->isClockIn && !$myTodayAttendance->isAbsence)
+      {!! Form::open(['route' => 'attendance.store.end_time']) !!}
+        {!! Form::hidden('date', null, ['id' => 'date-target']) !!}
+        {!! Form::hidden('end_time', null, ['id' => 'time-target']) !!}
     @endif
         <a href="#close" class="cancel-btn">Cancel</a>
         {!! Form::submit('Yes', ['class' => 'yes-btn']) !!}

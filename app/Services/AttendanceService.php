@@ -6,7 +6,6 @@ namespace App\Services;
 
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 Class AttendanceService
 {
@@ -17,34 +16,32 @@ Class AttendanceService
         $this->attendance = $attendance;
     }
 
-    public function getAttendance()
+    public function getMyTodayAttendance()
     {
-        return $this->attendance;
+        return $this->attendance
+            ->where('user_id', Auth::id())
+            ->where('date', now()->format('Y-m-d'))
+            ->first();
     }
 
     public function storeStartTime(array $attributes)
     {   
-        if (!$this->attendance->isClockIn && !$this->attendance->isClockOut) {
-            $this->attendance->user_id = Auth::id();
-            $this->attendance->date = $attributes['date'];
-            $this->attendance->start_time = $attributes['start_time'];
-    
-            $this->attendance->save();
-        }
+        $this->attendance->fill($attributes);
+        $this->attendance->user_id = Auth::id();
+
+        $this->attendance->save();
     }
 
     public function storeEndTime(array $attributes)
     {   
-        if ($this->attendance->isClockIn && !$this->attendance->isClockOut) {
-            $attendance = $this->attendance
-                ->where('user_id', Auth::id())
-                ->where('date', now()->format('Y-m-d'))
-                ->first();
+        $attendance = $this->attendance
+            ->where('date', $attributes['date'])
+            ->where('user_id', Auth::id())
+            ->first();
 
-            $attendance->end_time = $attributes['end_time'];
-    
-            $attendance->save();
-        }
+        $attendance->end_time = $attributes['end_time'];
+
+        $attendance->save();
     }
 
     public function absent(array $attributes)
@@ -54,15 +51,16 @@ Class AttendanceService
             ->where('user_id', Auth::id())
             ->first();
 
-        if (isset($todayAttendance)) {
-            $todayAttendance->absent_reason = $attributes['absent_reason'];
-            $todayAttendance->is_absent = 1;
+        if (is_null($todayAttendance)) {
+            $this->attendance->is_absent = 1;
+            $this->attendance->absent_reason = $attributes['absent_reason'];
+            $this->attendance->user_id = Auth::id();
+            $this->attendance->date = now()->format('Y-m-d');
 
-            $todayAttendance->save();
+            $this->attendance->save();
         } else {
-            $todayAttendance = $this->attendance->fill($attributes);
-            $todayAttendance->user_id = Auth::id();
             $todayAttendance->is_absent = 1;
+            $todayAttendance->absent_reason = $attributes['absent_reason'];
 
             $todayAttendance->save();
         }
@@ -80,5 +78,13 @@ Class AttendanceService
 
             $attendance->save();
         }
+    }
+
+    public function fetchAllMyAttendances()
+    {
+        return $this->attendance
+            ->where('user_id', Auth::id())
+            ->orderByDesc('date')
+            ->get();
     }
 }

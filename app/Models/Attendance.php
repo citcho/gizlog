@@ -15,26 +15,22 @@ class Attendance extends Model
         'request_content',
     ];
 
-    public function absence()
-    {
-        return $this->hasOne(Absence::class, 'attendance_id', 'id');
-    }
+    protected $dates = [
+        'date',
+    ];
 
     public function getIsClockInAttribute()
     {
-        return $this->where('user_id', Auth::id())
-            ->where('date', now()->format('Y-m-d'))
-            ->whereNotNull('start_time')
-            ->whereNull('end_time')
-            ->exists();
+        return isset($this->start_time) && !isset($this->end_time) ? true : false;
     }
 
     public function getIsClockOutAttribute()
     {
-        return $this->where('user_id', Auth::id())
-            ->where('date', now()->format('Y-m-d'))
-            ->whereNotNull('start_time')
-            ->whereNotNull('end_time')
-            ->exists();
+        return isset($this->start_time) && isset($this->end_time) ? true : false;
+    }
+
+    public function getIsAbsenceAttribute()
+    {
+        return $this->is_absent === 1 ? true : false;
     }
 }
