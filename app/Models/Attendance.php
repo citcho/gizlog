@@ -33,4 +33,9 @@ class Attendance extends Model
     {
         return $this->is_absent === 1 ? true : false;
     }
+
+    public function getHasModifyRequestAttribute()
+    {
+        return isset($this->request_content) ? true: false;
+    }
 }

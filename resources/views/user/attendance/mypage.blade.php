@@ -33,20 +33,38 @@
       </thead>
       <tbody>
       @foreach ($myAttendances as $attendance)
-        <tr class="row">
+        <tr class="row @if ($attendance->isAbsence) absent-row @endif">
           <td class="col-xs-2">{{ $attendance->date->format('m/d (D)') }}</td>
-          <td class="col-xs-3">{{ substr($attendance->start_time, 0, 5) }}</td>
-          <td class="col-xs-3">{{ substr($attendance->end_time, 0, 5) }}</td>
+          <td class="col-xs-3">
+            @if (isset($attendance->start_time))
+              {{ substr($attendance->start_time, 0, 5) }}
+            @else
+              -
+            @endif
+          </td>
+          <td class="col-xs-3">
+            @if (isset($attendance->end_time))
+              {{ substr($attendance->end_time, 0, 5) }}
+            @else
+              -
+            @endif
+          </td>
           <td class="col-xs-2">
-            @if ($attendance->isClockOut)
+            @if ($attendance->isAbsence)
+              欠席
+            @elseif ($attendance->isClockOut)
               出社
             @elseif ($attendance->isClockIn)
               研修中
-            @else
-              欠席
             @endif
           </td>
-          <td class="col-xs-2">-</td>
+          <td class="col-xs-2">
+            @if ($attendance->hasModifyRequest)
+              申請中
+            @else
+              -
+            @endif
+          </td>
         </tr>
       @endforeach
       </tbody>
