@@ -68,10 +68,12 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
             Route::get('modify', ['as' => 'show.modify', 'uses' => 'AttendanceController@showModifyRequestPage']);
             Route::get('mypage', ['as' => 'show.mypage', 'uses' => 'AttendanceController@showMyPage']);
 
-            Route::post('/clock_in', ['as' => 'store.start_time', 'uses' => 'AttendanceController@clockIn']);
-            Route::post('/clock_out', ['as' => 'store.end_time', 'uses' => 'AttendanceController@clockOut']);
+            Route::post('clock_in', ['as' => 'store.start_time', 'uses' => 'AttendanceController@clockIn']);
+            Route::post('clock_out', ['as' => 'store.end_time', 'uses' => 'AttendanceController@clockOut']);
 
-            Route::post('/absence', ['as' => 'absence', 'uses' => 'AttendanceController@absent']);
+            Route::post('absence', ['as' => 'absence', 'uses' => 'AttendanceController@absent']);
+
+            Route::post('modify', ['as' => 'modify', 'uses' => 'AttendanceController@modify']);
         });
 });
 
