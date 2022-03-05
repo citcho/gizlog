@@ -24,7 +24,9 @@ class AttendanceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'date' => 'required|date_format:Y-m-d|before_or_equal:today',
+            'start_time' => 'required_without:end_time|date_format:H:i',
+            'end_time' => 'required_without:start_time|date_format:H:i',
         ];
     }
 
@@ -36,7 +38,10 @@ class AttendanceRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'required' => '必須入力です。',
+            'date.date_format' => '日付の書式が異なります。',
+            'start_time.date_format' => '時間の書式が異なります。',
+            'before_or_equal' => ':today 以前の日付を入力してください。'
         ];
     }
 }

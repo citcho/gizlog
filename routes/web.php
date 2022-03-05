@@ -59,6 +59,22 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
 
             Route::delete('question/{id}', ['as' => 'delete', 'uses' => 'QuestionController@delete']);
         });
+
+    Route::name('attendance.')
+        ->prefix('attendance')
+        ->group(function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'AttendanceController@index']);
+            Route::get('absence', ['as' => 'show.absence', 'uses' => 'AttendanceController@showAbsenceRegistrationPage']);
+            Route::get('modify', ['as' => 'show.modify', 'uses' => 'AttendanceController@showModifyRequestPage']);
+            Route::get('mypage', ['as' => 'show.mypage', 'uses' => 'AttendanceController@showMyPage']);
+
+            Route::post('clock_in', ['as' => 'store.start_time', 'uses' => 'AttendanceController@clockIn']);
+            Route::post('clock_out', ['as' => 'store.end_time', 'uses' => 'AttendanceController@clockOut']);
+
+            Route::post('absence', ['as' => 'absence', 'uses' => 'AttendanceController@absent']);
+
+            Route::post('modify', ['as' => 'modify', 'uses' => 'AttendanceController@modify']);
+        });
 });
 
 // 管理者側画面
